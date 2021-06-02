@@ -22,25 +22,34 @@ class FilterBooklist extends Component {
         e.preventDefault()
         console.log(this.props['book'].filter(book => book["title"].toLowerCase().includes(this.state.search)).map(filterBook => (<SingleBook name={filterBook}/> )))
         // fantasyBooks.filter(book => book["title"].includes(this.state.search)).map(filterBook => (<SingleBook name={filterBook}/> ))
-        
+        console.log(this.state.search.length);        
         let filterBooks = this.props['book'].filter(book => book["title"].toLowerCase().includes(this.state.search))
         console.log(filterBooks)
-         this.setState({books:filterBooks})
+        if(this.state.search.length>2){
+            this.setState({
+                books:filterBooks
+            })
+        }else{
+            this.setState({
+                books:[]
+            })
+        }
+        
     }
 
     render() {
       return (<>  <Form inline onSubmit={(e) => this.searchBooks(e)}>
-            <FormControl id="search" 
-                type="text" 
-                value={this.state.search} 
-                placeholder="Search" 
-                className="mr-sm-2 my-3 ml-5"  
-                onChange={e => this.inputChange(e)}/>
-            <Button variant="outline-success" type="submit" >Search</Button>
-            </Form>
-            <Container fluid className="search-books">
-               {this.state.books && <SingleBook name ={this.state.books}/>}
-            </Container>
+                    <FormControl id="search" 
+                        type="text" 
+                        value={this.state.search} 
+                        placeholder="Search" 
+                        className="mr-sm-2 my-3 ml-5"  
+                        onChange={e => this.inputChange(e)}/>
+                    <Button variant="outline-success" type="submit">Search</Button>
+                  </Form>
+                  <Container fluid className="search-books">
+                        {this.state.books && <SingleBook name ={this.state.books}/>}
+                  </Container>
            
             </>)
     }
