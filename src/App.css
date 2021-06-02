@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.form-inline{
+  background-color: #61dafb;
+}
+
+.search-books{
+  background-color: #61dafb;
+}

@@ -1,6 +1,5 @@
-import {Form, FormControl, Button} from 'react-bootstrap'
+import {Form, FormControl, Button, Container} from 'react-bootstrap'
 import {Component} from 'react'
-import fantasyBooks from '../data/fantasy.json'
 import SingleBook from './SingleBook'
 
 class FilterBooklist extends Component {
@@ -14,17 +13,17 @@ class FilterBooklist extends Component {
 
         this.setState({
 
-                search: e.target.value
+                search: e.target.value.toLowerCase()
 
         })
     }
 
     searchBooks =(e)=>{
         e.preventDefault()
-        console.log(fantasyBooks.filter(book => book["title"].includes(this.state.search)).map(filterBook => (<SingleBook name={filterBook}/> )))
+        console.log(this.props['book'].filter(book => book["title"].toLowerCase().includes(this.state.search)).map(filterBook => (<SingleBook name={filterBook}/> )))
         // fantasyBooks.filter(book => book["title"].includes(this.state.search)).map(filterBook => (<SingleBook name={filterBook}/> ))
         
-        let filterBooks = fantasyBooks.filter(book => book["title"].includes(this.state.search))
+        let filterBooks = this.props['book'].filter(book => book["title"].toLowerCase().includes(this.state.search))
         console.log(filterBooks)
          this.setState({books:filterBooks})
     }
@@ -35,12 +34,14 @@ class FilterBooklist extends Component {
                 type="text" 
                 value={this.state.search} 
                 placeholder="Search" 
-                className="mr-sm-2 my-3"  
+                className="mr-sm-2 my-3 ml-5"  
                 onChange={e => this.inputChange(e)}/>
-
             <Button variant="outline-success" type="submit" >Search</Button>
             </Form>
-            {this.state.books && <SingleBook name ={this.state.books}/>}
+            <Container fluid className="search-books">
+               {this.state.books && <SingleBook name ={this.state.books}/>}
+            </Container>
+           
             </>)
     }
 }

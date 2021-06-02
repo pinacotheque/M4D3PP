@@ -8,7 +8,6 @@ import scifibooks from './data/scifi.json'
 import WarningSign from './components/WarningSign';
 import MyBadge from './components/MyBadge'
 import BookList from './components/BookList'
-import FilterBooklist from './components/FilterBookList';
 
 
 function App() {
@@ -16,7 +15,6 @@ function App() {
     <div>
       <WarningSign title="bookstore"/>
       <MyBadge text="Badge" color="danger"/>
-      <FilterBooklist/>
       <BookList fantasy={fantasybooks} history={historybooks} horror={horrorbooks} romance={romancebooks} scifi={scifibooks}/>      
     </div>
   );
