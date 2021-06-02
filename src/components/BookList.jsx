@@ -11,7 +11,7 @@ import scifibooks from '../data/scifi.json'
 const BookList =(props)=>(
     <Tabs defaultActiveKey="fantasy" id="uncontrolled-tab-example">
              
-        <Tab eventKey="home" title="fantasy">
+        <Tab eventKey="fantasy" title="fantasy">
                <FilterBooklist book={fantasybooks}/>
                <hr/>
                 <SingleBook name={props['fantasy']}/>
