@@ -13,7 +13,8 @@ const SingleBook =(props) => (
        <Card.Body>
            <Card.Title>{book.title}</Card.Title>
            <Card.Text>
-           Some quick 
+           <p>{book.category}</p> 
+           <span>{book.price}</span>
            </Card.Text>
            <Button variant="primary">Buy</Button>
        </Card.Body>
