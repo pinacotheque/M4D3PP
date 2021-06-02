@@ -7,6 +7,7 @@ class FilterBooklist extends Component {
 
     state = {
         search: "",
+        books: [],
     }
 
     inputChange = (e) => {
@@ -25,11 +26,11 @@ class FilterBooklist extends Component {
         
         let filterBooks = fantasyBooks.filter(book => book["title"].includes(this.state.search))
         console.log(filterBooks)
-        return <SingleBook name ={filterBooks}/>
+         this.setState({books:filterBooks})
     }
 
     render() {
-      return   <Form inline onSubmit={(e) => this.searchBooks(e)}>
+      return (<>  <Form inline onSubmit={(e) => this.searchBooks(e)}>
             <FormControl id="search" 
                 type="text" 
                 value={this.state.search} 
@@ -39,6 +40,8 @@ class FilterBooklist extends Component {
 
             <Button variant="outline-success" type="submit" >Search</Button>
             </Form>
+            {this.state.books && <SingleBook name ={this.state.books}/>}
+            </>)
     }
 }
 
