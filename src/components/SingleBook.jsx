@@ -1,6 +1,7 @@
 
 import {Container, Row, Card, Button} from 'react-bootstrap'
 import {Component} from 'react'
+import CommentArea from './CommentArea'
 
 class SingleBook extends Component{
 
@@ -16,7 +17,7 @@ class SingleBook extends Component{
              
              {this.props["name"].map ((book,index) => ( 
                 // this.setState={selected: book}
-                <Card 
+                <Card onClick={CommentArea}
                 id={"book.asin"}
                 className="mt-3 mx-3" 
                 key={index}  
