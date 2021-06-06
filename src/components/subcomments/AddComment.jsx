@@ -1,98 +1,80 @@
-
-import {Component} from 'react'
-import {Form} from 'react-bootstrap'
+import { Component } from "react";
+import { Button, Form } from 'react-bootstrap'
 
 class AddComment extends Component {
-    state={
-        comment:{
-            text:"",
+
+    state = {
+        comment: {
+            comment: '',
             rate: 1,
-            id:""
+            elementId: this.props.asin
         }
     }
 
-    inputChange = (e)=>{
-        let id=e.target.id
-
-        this.setState({
-            comment: {
-                ...this.state.comment,
-            }
-        })
-    }
-
-    submitReservation = async (e) => {
+    sendComment = async (e) => {
         e.preventDefault()
-        console.log("Comments are about to submitted")
-        console.log(this.state.reservation)
-        // we're about to use fetch()
-        // fetch() is always going to return you a Promise
-        // a Promise is an asynchronous operation: you know when it starts,
-        // you don't know when it ends
-
-        // async/await
-        // .then()
-
         try {
-            let response = await fetch("https://striveschool.herokuapp.com/api/reservation", {
+            let response = await fetch('https://striveschool-api.herokuapp.com/api/comments', {
                 method: 'POST',
-                body: JSON.stringify(this.state.reservation),
+                body: JSON.stringify(this.state.comment),
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json',
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI3OWY5NTgxNmI1YjAwMTU5NDA3NDAiLCJpYXQiOjE2MjI2NDY2NzcsImV4cCI6MTYyMzg1NjI3N30.y-rBwB5WAQOWBvWrLlAgTQUrbGulxd2M6cWH3VLyGLw'
                 }
             })
-            console.log(response.ok) // the ok property from the fetch() is going to tell you if the operation was successfull
             if (response.ok) {
-                alert('Reservation saved!')
-                this.setState({
-                    reservation: {
-                        name: '',
-                        phone: '',
-                        numberOfPersons: 1,
-                        smoking: false,
-                        dateTime: '',
-                        specialRequests: ''
-                    }
-                })
+                // the comment has been sent succesfully!!
+                alert('Comment was sent!')
             } else {
-                // this is going to catch a server problem
-                // i.e: server is down, db has a problem
-                alert('Houston we had a problem, try again!')
+                console.log('error')
+                alert('something went wrong')
             }
         } catch (error) {
-            // if we fall here it means we don't have connection
-            // or maybe the url is not quite right
-            console.log(error)
+            console.log('error')
         }
-
-        // fetch("https://striveschool.herokuapp.com/api/reservation")
-        //     .then(response => console.log(response.ok))
-        //     .catch(error => console.log(error))
-
     }
 
-    render(){
-        return(
-            <Form className="mb-5" onSubmit={(e) => this.submitReservation(e)}>
-                <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Example textarea</Form.Label>
-                    <Form.Control as="textarea" rows={3} />
-                </Form.Group>
-                <Form.Group controlId="exampleForm.ControlSelect1">
-                    <Form.Label>Rating</Form.Label>
-                    <Form.Control as="select">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    </Form.Control>
-                </Form.Group>
-            </Form>
+    render() {
+        return (
+            <div>
+                <Form onSubmit={this.sendComment}>
+                    <Form.Group>
+                        <Form.Label>Comment text</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Add comment here"
+                            value={this.state.comment.comment}
+                            onChange={e => this.setState({
+                                comment: {
+                                    ...this.state.comment,
+                                    comment: e.target.value
+                                }
+                            })}
+                        />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Rating</Form.Label>
+                        <Form.Control as="select" value={this.state.comment.rate}
+                            onChange={e => this.setState({
+                                comment: {
+                                    ...this.state.comment,
+                                    rate: e.target.value
+                                }
+                            })}>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </Form.Control>
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                </Form>
+            </div>
         )
-
     }
-
 }
 
 export default AddComment

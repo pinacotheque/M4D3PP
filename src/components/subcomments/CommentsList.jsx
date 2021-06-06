@@ -1,13 +1,15 @@
-import { Container, Row } from 'react-bootstrap'
+
+import { ListGroup } from 'react-bootstrap'
 import SingleComment from './SingleComment'
 
+const CommentList = ({ commentsToShow }) => (
+    <ListGroup style={{ color: 'black' }}>
+        {
+            commentsToShow.map(comment => (
+                <SingleComment comment={comment} key={comment._id} />
+            ))
+        }
+    </ListGroup>
+)
 
-const CommentsList = (props) => {
-    <Container>
-        <Row>
-            <h4><SingleComment comment={props.comment}/></h4>
-        </Row>
-    </Container>
-}
-
-export default CommentsList
+export default CommentList

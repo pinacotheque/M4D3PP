@@ -1,42 +1,42 @@
-import {Tab, Tabs} from 'react-bootstrap'
+import React from 'react'
 import SingleBook from './SingleBook'
-import FilterBooklist from './FilterBookList';
-import fantasybooks from '../data/fantasy.json'
-import historybooks from '../data/history.json'
-import horrorbooks from '../data/horror.json'
-import romancebooks from '../data/romance.json'
-import scifibooks from '../data/scifi.json'
+import { Col, Container, Form, Row } from 'react-bootstrap'
 
+class BookList extends React.Component {
 
-const BookList =(props)=>(
-    <Tabs defaultActiveKey="fantasy" id="uncontrolled-tab-example">
-             
-        <Tab eventKey="fantasy" title="fantasy">
-               <FilterBooklist book={fantasybooks}/>
-               <hr/>
-                <SingleBook name={props['fantasy']}/>
-        </Tab>
-        <Tab eventKey="history" title="history">
-                 <FilterBooklist book={historybooks}/>
-                 <hr/>
-                <SingleBook name={props['history']}/>
-        </Tab>
-        <Tab eventKey="horror" title="horror" >
-                <FilterBooklist book={horrorbooks}/>
-                <hr/>
-                <SingleBook name={props['horror']}/>
-        </Tab>
-        <Tab eventKey="romance" title="romance">
-                <FilterBooklist book={romancebooks}/>
-                <hr/>
-                <SingleBook name={props['romance']}/>
-        </Tab>
-        <Tab eventKey="scifi" title="scifi" >
-                <FilterBooklist book={scifibooks}/>
-                <hr/>
-                <SingleBook name={props['scifi']}/>
-        </Tab>
-</Tabs>
+    state = {
+        searchQuery: ''
+    }
 
-)
+    render() {
+        return (
+            <Container>
+                <Row>
+                    <Col>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Label>Search</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Search here"
+                                value={this.state.searchQuery}
+                                onChange={e => this.setState({ searchQuery: e.target.value })}
+                            />
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row>
+                    {
+                        this.props.books.filter(b => b.title.toLowerCase().includes(this.state.searchQuery)).map(b => (
+                            <Col xs={3} key={b.asin} >
+                                <SingleBook book={b} />
+                            </Col>
+                        ))
+                    }
+                </Row>
+            </Container>
+        )
+    }
+
+}
+
 export default BookList

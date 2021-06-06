@@ -1,45 +1,47 @@
-import {Component} from 'react'
-import {Button,Card, Container,Row } from 'react-bootstrap'
-import addComments from './subcomments/AddComment'
-import listComments from './subcomments/CommentsList'
 
+import { Component } from 'react'
+import CommentList from './subcomments/CommentsList'
+import AddComment from './subcomments/AddComment'
+import Loading from './subcomments/Loading'
+import Error from './subcomments/Error'
 
 class CommentArea extends Component {
-    state ={
-        selected: null,
+
+    state = {
+        comments: [], // comments will go here
+        isLoading: true,
+        isError: false
     }
 
-    componentDidMount = async () =>{
-        const url= "https://striveschool-api.herokuapp.com/api/comments/"
-        const key = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFlNDE5ZWNlYWY0ODAwMTVjOTE4NzIiLCJpYXQiOjE2MjI3MjY1MDcsImV4cCI6MTYyMzkzNjEwN30.0MYIhamMSFpIySy17fS2JHxc0CvnImc6tAokmi6cNrg"
+    componentDidMount = async () => {
         try {
-            let response = await fetch(url.anchor,{
-                "Authorization": key
+            let response = await fetch('https://striveschool-api.herokuapp.com/api/comments/' + this.props.asin, {
+                headers: {
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGI3OWY5NTgxNmI1YjAwMTU5NDA3NDAiLCJpYXQiOjE2MjI2NDY2NzcsImV4cCI6MTYyMzg1NjI3N30.y-rBwB5WAQOWBvWrLlAgTQUrbGulxd2M6cWH3VLyGLw'
+                }
             })
             console.log(response)
+            if (response.ok) {
+                let comments = await response.json()
+                this.setState({ comments: comments, isLoading: false, isError: false })
+            } else {
+                console.log('error')
+                this.setState({ isLoading: false, isError: true })
+            }
         } catch (error) {
             console.log(error)
+            this.setState({ isLoading: false, isError: true })
         }
     }
 
-    render(){
-        return(
-            <Container>
-                <Row>
-                    {listComments.map((list,index)=>(
-                        <Card className="text-center">
-                        <Card.Body>
-                          <Card.Title>{list.comment}</Card.Title>
-                          <Card.Text>
-                            With supporting text below as a natural lead-in to additional content.
-                          </Card.Text>
-                          <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                        <Card.Footer className="text-muted">2 days ago</Card.Footer>
-                      </Card>
-                    ))}
-                </Row>
-            </Container>
+    render() {
+        return (
+            <div>
+                {this.state.isLoading && <Loading />}
+                {this.state.isError && <Error />}
+                <AddComment asin={this.props.asin} />
+                <CommentList commentsToShow={this.state.comments} />
+            </div>
         )
     }
 }

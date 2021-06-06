@@ -1,57 +1,32 @@
-
-import {Container, Row, Card, Button} from 'react-bootstrap'
-import {Component} from 'react'
+import React from 'react'
+import { Card } from 'react-bootstrap'
 import CommentArea from './CommentArea'
 
-class SingleBook extends Component{
+class SingleBook extends React.Component {
 
     state = {
-
-        selected:false
+        selected: false
     }
 
-    render(){
-        return(
-            <Container>
-            <Row className="justify-content-center mt-3"> 
-             
-             {this.props["name"].map ((book,index) => ( 
-                // this.setState={selected: book}
-                <Card onClick={CommentArea}
-                id={"book.asin"}
-                className="mt-3 mx-3" 
-                key={index}  
-                style={{ width: '14rem'}}>
-                <Card.Img variant="top" src={book.img} />
-                <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <Card.Text>
-                    <p>{book.category}</p> 
-                    <span onMouseOver={(e)=>{
-                        e.target.innerText = 'Discount 50%'
-                    }}
-                    onMouseOut={(e)=>{
-                        e.target.innerText = book.price
-                    }}>{book.price}</span>
-                    </Card.Text>
-                    <Button onClick={(e)=>{
-                    e.target.innerText = 'Bought'
-                    return this.setState({selected:true}) 
-             }   
-               } 
-               variant="primary">Buy</Button>
-                </Card.Body>
-                </Card>))
+    render() {
+        return (
+            <>
+                <Card
+                    onClick={() => this.setState({ selected: !this.state.selected })}
+                    style={{ border: this.state.selected ? '3px solid red' : 'none' }}
+                >
+                    <Card.Img variant="top" src={this.props.book.img} />
+                    <Card.Body>
+                        <Card.Title style={{ color: 'black' }}>{this.props.book.title}</Card.Title>
+                    </Card.Body>
+                </Card>
+                {
+                    this.state.selected && <CommentArea asin={this.props.book.asin} />
                 }
-                </Row>
-                </Container>
+            </>
         )
     }
- 
+
 }
-
-        
-
-
 
 export default SingleBook

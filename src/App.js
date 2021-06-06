@@ -15,7 +15,7 @@ function App() {
     <div>
       <WarningSign title="bookstore"/>
       <MyBadge text="Badge" color="danger"/>
-      <BookList fantasy={fantasybooks} history={historybooks} horror={horrorbooks} romance={romancebooks} scifi={scifibooks}/>      
+      <BookList books={fantasybooks} />      
     </div>
   );
 }
