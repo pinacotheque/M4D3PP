@@ -4,6 +4,7 @@ import CommentList from './subcomments/CommentsList'
 import AddComment from './subcomments/AddComment'
 import Loading from './subcomments/Loading'
 import Error from './subcomments/Error'
+import { Col, Row, Image } from 'react-bootstrap'
 
 class CommentArea extends Component {
 
@@ -36,12 +37,23 @@ class CommentArea extends Component {
 
     render() {
         return (
-            <div>
-                {this.state.isLoading && <Loading />}
-                {this.state.isError && <Error />}
-                <AddComment asin={this.props.asin} />
-                <CommentList commentsToShow={this.state.comments} />
-            </div>
+            <Row className = "d-flex">
+            
+                <>
+                    <Col md={6}>
+                        <Image src={this.props.book.img} fluid/>
+                    </Col>
+                    <Col md={6}>
+                         {this.state.isLoading && <Loading />}
+                    {this.state.isError && <Error />}
+                    <AddComment asin={this.props.asin} />
+                    <CommentList commentsToShow={this.state.comments} />
+                    </Col>
+                   
+                </>
+               
+            
+            </Row>
         )
     }
 }

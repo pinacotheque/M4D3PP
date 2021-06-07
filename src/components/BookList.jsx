@@ -1,11 +1,13 @@
 import React from 'react'
 import SingleBook from './SingleBook'
 import { Col, Container, Form, Row } from 'react-bootstrap'
+import CommentArea from './CommentArea'
 
 class BookList extends React.Component {
 
     state = {
-        searchQuery: ''
+        searchQuery: '',
+        commentSec: false,
     }
 
     render() {
@@ -24,11 +26,12 @@ class BookList extends React.Component {
                         </Form.Group>
                     </Col>
                 </Row>
+                {/* { this.state.commentSec && <CommentArea  asin={this.props.book.asin} book= {this.props.book}/>} */}
                 <Row>
                     {
-                        this.props.books.filter(b => b.title.toLowerCase().includes(this.state.searchQuery)).map(b => (
-                            <Col xs={3} key={b.asin} >
-                                <SingleBook book={b} />
+                        this.props.books.filter(b => b.title.toLowerCase().includes(this.state.searchQuery)).map(book => (
+                            <Col xs={3} key={book.asin}>
+                                <SingleBook key={book.asin} book={book} onBookSelected={(book)=> this.setState({commentSec:book})}/>
                             </Col>
                         ))
                     }

@@ -8,6 +8,7 @@ class SingleBook extends React.Component {
         selected: false
     }
 
+    
     render() {
         return (
             <>
@@ -21,7 +22,7 @@ class SingleBook extends React.Component {
                     </Card.Body>
                 </Card>
                 {
-                    this.state.selected && <CommentArea asin={this.props.book.asin} />
+                    this.state.selected && <CommentArea asin={this.props.book.asin} book={this.props.book}/>
                 }
             </>
         )
