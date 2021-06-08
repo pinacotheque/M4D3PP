@@ -1,33 +1,24 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
-import BookList from './BookList'
-import CommentArea from './CommentArea'
+import {useState} from 'react'
 
-class SingleBook extends React.Component {
+const SingleBook = (props)=> {
 
-    state = {
-        selected: false
-    }
-
-    
-    render() {
+    const [selected, setSelected] = useState(false)
+   
         return (
             <>
                 <Card
-                    onClick={() => {
-                        this.setState({ selected: !this.state.selected })
-                        }}
-                    style={{ border: this.state.selected ? '3px solid gray' : 'none' }}
+                    onClick={() =>  setSelected(!selected)}
+                    style={{ border: selected ? '3px solid gray' : 'none' }}
                 >
-                    <Card.Img variant="top" src={this.props.book.img} />
+                    <Card.Img variant="top" src={props.book.img} />
                     <Card.Body>
-                        <Card.Title style={{ color: 'black' }}>{this.props.book.title}</Card.Title>
+                        <Card.Title style={{ color: 'black' }}>{props.book.title}</Card.Title>
                     </Card.Body>
-                </Card>
-                
+                </Card> 
             </>
         )
-    }
 
 }
 

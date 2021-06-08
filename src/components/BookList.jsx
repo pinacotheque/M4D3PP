@@ -1,20 +1,19 @@
-import {Component} from 'react'
+import {useState} from 'react'
 import SingleBook from './SingleBook'
 import { Col, Container, Form, Row } from 'react-bootstrap'
 import CommentArea from './CommentArea'
 
-class BookList extends Component {
+const BookList =(props) => {
 
-    // const [searchQuery, setSearchQuery] =useState([])
-    // const [commentSec, setCommentSec] =useState(false)
-    // const [selectedBook, setSelectedBook] =useState([])
-    state = {
+    const [searchQuery, setSearchQuery] = useState({
         searchQuery: '',
         commentSec: false,
         selectedBook: undefined,
-    }
+    })
+    
+    
 
-    render() {
+    
         return (
             <Container fluid>
                 <Row className="d-flex flex-row">
@@ -24,8 +23,8 @@ class BookList extends Component {
                             <Form.Control
                                 type="text"
                                 placeholder="Search here"
-                                value={this.state.searchQuery}
-                                onChange={e => this.setState({ searchQuery: e.target.value })}
+                                value={searchQuery}
+                                onChange={e => setSearchQuery({ searchQuery: e.target.value })}
                             />
                         </Form.Group>
                     </Col>
@@ -36,14 +35,14 @@ class BookList extends Component {
             <Col md={2} className="position-fixed">
 
                
-               {this.state.selectedBook && <CommentArea asin={this.state.selectedBook.asin} book={this.state.selectedBook}/>}
+               {selectedBook && <CommentArea asin={selectedBook.asin} book={this.state.selectedBook}/>}
 
             </Col>
 
                 <Col md={10}  className="offset-2 d-flex flex-wrap">
                     {
-                        this.props.books.filter(b => b.title.toLowerCase().includes(this.state.searchQuery)).map(book => (
-                            <Col xs={3} key={book.asin} onClick={()=> this.setState({selectedBook: book})}>
+                        props.books.filter(b => b.title.toLowerCase().includes(searchQuery)).map(book => (
+                            <Col xs={3} key={book.asin} onClick={()=> setSearchQuery({selectedBook: book})}>
                                 <SingleBook  key={book.asin} book={book}/>
                            
                             </Col>   
@@ -53,7 +52,7 @@ class BookList extends Component {
                 </Row>
             </Container>
         )
-    }
+    
 
 }
 
