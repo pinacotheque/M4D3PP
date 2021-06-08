@@ -3,15 +3,10 @@ import SingleBook from './SingleBook'
 import { Col, Container, Form, Row } from 'react-bootstrap'
 import CommentArea from './CommentArea'
 
-const BookList =(props) => {
+const BookList =({books}) => {
 
-    const [searchQuery, setSearchQuery] = useState({
-        searchQuery: '',
-        commentSec: false,
-        selectedBook: undefined,
-    })
-    
-    
+    const [searchQuery, setSearchQuery] = useState([])
+    const [selectedBook, setSelectedBook] = useState(null)
 
     
         return (
@@ -24,7 +19,7 @@ const BookList =(props) => {
                                 type="text"
                                 placeholder="Search here"
                                 value={searchQuery}
-                                onChange={e => setSearchQuery({ searchQuery: e.target.value })}
+                                onChange={e => setSearchQuery( e.target.value )}
                             />
                         </Form.Group>
                     </Col>
@@ -32,17 +27,17 @@ const BookList =(props) => {
                 
                 <Row >
 
-            <Col md={2} className="position-fixed">
+            <Col md={2} className="position-fixed align-items-center">
 
                
-               {selectedBook && <CommentArea asin={selectedBook.asin} book={this.state.selectedBook}/>}
+               {selectedBook && <CommentArea asin={selectedBook.asin} book={selectedBook}/>}
 
             </Col>
 
                 <Col md={10}  className="offset-2 d-flex flex-wrap">
                     {
-                        props.books.filter(b => b.title.toLowerCase().includes(searchQuery)).map(book => (
-                            <Col xs={3} key={book.asin} onClick={()=> setSearchQuery({selectedBook: book})}>
+                        books.filter(b => b.title.toLowerCase().includes(searchQuery)).map(book => (
+                            <Col xs={3} key={book.asin} onClick={()=> setSelectedBook( book)}>
                                 <SingleBook  key={book.asin} book={book}/>
                            
                             </Col>   

@@ -21,7 +21,8 @@ const deleteComment = async (asin) => {
 
 const SingleComment = ({ comment }) => (
     <ListGroup.Item>
-        {comment.comment}
+        {comment.comment} 
+        <span style={{ fontSize: '12px' }}>{comment.author}</span>
         <Button variant="danger" className="ml-2" onClick={() => deleteComment(comment._id)}>D</Button>
     </ListGroup.Item>
 )
