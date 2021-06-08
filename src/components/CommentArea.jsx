@@ -34,26 +34,24 @@ class CommentArea extends Component {
             this.setState({ isLoading: false, isError: true })
         }
     }
-
+   
     render() {
         return (
-            <Row className = "d-flex">
+            
             
                 <>
-                    <Col md={6}>
-                        <Image src={this.props.book.img} fluid/>
-                    </Col>
-                    <Col md={6}>
+                    <Row >
+                        <Image src={this.props.book.img} style={{ height:"200px" , width: "150px", objectFit:"cover" }} fluid/>
+                    </Row>
+                    <Row >
                          {this.state.isLoading && <Loading />}
                     {this.state.isError && <Error />}
                     <AddComment asin={this.props.asin} />
                     <CommentList commentsToShow={this.state.comments} />
-                    </Col>
+                    </Row>
                    
                 </>
-               
             
-            </Row>
         )
     }
 }
